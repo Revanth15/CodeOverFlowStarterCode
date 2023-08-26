@@ -1,11 +1,12 @@
 from flask import Flask 
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import LoginManager
+# TODO: import flask_sqlalchemy
+# TODO: import flask_login
 from flask_wtf.csrf import CSRFProtect
 from os import path
 
-db = SQLAlchemy()
+# TODO: declare sqlalchemy db here
 csrf = CSRFProtect()
+
 
 def create_app():
 
@@ -18,24 +19,13 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
 
+    # from .models import Users, Expenses
 
-    from .models import Users, Expenses
+    # TODO: initialise sqlalchemy db here
 
-    db.init_app(app)
+    # TODO: create sqlalchemy db file
 
-    if not path.exists(app.config['DATABASE_NAME']):
-        db.create_all(app=app)
-        print('Created Database!')
-
-
-    login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
-    login_manager.init_app(app)
-
-    @login_manager.user_loader
-    def load_user(id):
-        return Users.query.get(id)
-
+    # TODO: initialise loginmanager
 
     csrf.init_app(app)
     return app
